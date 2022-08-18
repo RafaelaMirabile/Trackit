@@ -49,12 +49,10 @@ export default function Today(){
     const topbar = concludedHabits();
     
     return(
-        <>  
-<TodayContainer> 
-                        {topbar}
-
-                        {loading ?                         <TodayUserHabitsContainer>
-                            {arrTodayUserHabits.map((value,index)=> 
+            <TodayContainer> 
+                {topbar}
+                {loading ? <TodayUserHabitsContainer>
+                                {arrTodayUserHabits.map((value,index)=> 
                                 <HabitStatus 
                                     index={index} 
                                     habitName={value.name}
@@ -64,16 +62,12 @@ export default function Today(){
                                     status={value.done}
                                     loading={loading}
                                 />)}
-                        </TodayUserHabitsContainer> : <TodayUserHabitsLoadingContainer>
-                        <ThreeDots color="#FFFFFF" height={30} width={60}/>
-                            </TodayUserHabitsLoadingContainer>
-                        
+                            </TodayUserHabitsContainer> : 
+                            <TodayUserHabitsLoadingContainer>
+                                <ThreeDots color="#FFFFFF" height={30} width={60}/>
+                            </TodayUserHabitsLoadingContainer>                         
                         }
-
-
-</TodayContainer>  
-       
-        </>
+            </TodayContainer>         
     )
 }
 
@@ -110,7 +104,6 @@ function HabitStatus({habitName,currentSequence,highestSequence,status,habitID,l
         }       
     }    
     return(
-        <>  
         <TodayHabitBox>
             <SequenceBox>
                 <HabitName>{habitName}</HabitName>
@@ -124,8 +117,7 @@ function HabitStatus({habitName,currentSequence,highestSequence,status,habitID,l
                     width="28px"
                 />
             </CheckHabit>           
-        </TodayHabitBox> 
-        </>          
+        </TodayHabitBox>       
         )
     }
 
@@ -156,6 +148,7 @@ align-items: center;
 flex-direction: column;
 overflow-y: auto;
 border: 2px solid red;
+padding-bottom: 120px;
 `
 const TodayDate=styled.div`
 margin-bottom: 8px;

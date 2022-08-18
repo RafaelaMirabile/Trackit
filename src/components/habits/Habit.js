@@ -142,13 +142,18 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+padding-bottom: 70px;
+overflow-y: auto;
+
 `
 const HabitsContainer = styled.div`
 margin-top: 73px;
-border: 2px solid blue;
-height: 100vh;
-padding: 10px;
 background-color: #E5E5E5;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+height: 100vh;
+border: 2px solid blue;
 `
 const PageHeader= styled.div`
 display: flex;
