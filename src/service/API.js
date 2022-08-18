@@ -42,4 +42,14 @@ function deleteUserHabit(userToken,id){
     return promise;
 }
 
-export  {postSignUp,postLogin, sendUserHabit,getUserHabits,deleteUserHabit}
+function getUserHabitsForTodayPage(userToken){
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userToken}`
+        }
+    }
+    const promise = axios.get(`${URL_BASE}/habits/today`,config);
+    return promise;
+}
+
+export  {getUserHabitsForTodayPage,postSignUp,postLogin, sendUserHabit,getUserHabits,deleteUserHabit}

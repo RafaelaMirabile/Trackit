@@ -6,6 +6,7 @@ import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import UserContext from "../contexts/UserContext";
 import { CheckmarkSharp } from "react-ionicons";
+import { getUserHabitsForTodayPage } from "../service/API";
 
 export default function Today(){
 
@@ -15,20 +16,13 @@ export default function Today(){
 
     useEffect(()=>{
         
-        
-    
-        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",{
-        headers: {Authorization : `Bearer ${userToken}`}    
-        });
-
-        promise.then((response)=>{
-            setArrTodayUserHabits(response.data);
+        getUserHabitsForTodayPage(userToken).then(({data})=> {
+            setArrTodayUserHabits(data);
             setLoading(true);
 
-
-
-    });
-        promise.catch(()=> console.error);           
+        })
+        .catch(()=> console.error)
+        
     },[userToken, arrTodayUserHabits, setArrTodayUserHabits]);
 
     
