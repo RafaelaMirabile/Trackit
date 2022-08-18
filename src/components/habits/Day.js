@@ -17,7 +17,6 @@ export default function Day(props){
             setSelected(!selected);
             const newarray = Object.values(selectedDay).filter(value => value !== weekday.dayID);
             setSelectedDay(newarray);
-            console.log(selectedDay);
         }      
     }       
     return(

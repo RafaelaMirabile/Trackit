@@ -20,7 +20,7 @@ export default function Today(){
             setArrTodayUserHabits(data);
             setLoading(true);
         })
-        .catch(()=> console.error)
+        .catch(()=> console.error);
         
     },[userToken, arrTodayUserHabits, setArrTodayUserHabits]);
 

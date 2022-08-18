@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import UserContext from "../../contexts/UserContext";
 import Day from "./Day";
@@ -16,6 +16,7 @@ export default function Habits(){
     const [selectedDay, setSelectedDay] = useState([]);
     const [arrUserHabits, setArrUserHabits]= useState([]);
     const [loading, setLoading]= useState(true);
+    const [loadingHabits, setLoadingHabits]= useState(true);
 
        
     const weekdays =[
@@ -26,6 +27,15 @@ export default function Habits(){
     {day: 'Q',dayID: 4,isSelected : false},
     {day: 'S',dayID: 5,isSelected : false},
     {day: 'S',dayID: 6,isSelected : false}]
+    
+    useEffect(()=>{
+        setLoadingHabits(false);
+        getUserHabits(userToken).then(({data})=>{
+            setArrUserHabits(data);
+            setLoading(true);
+            setLoadingHabits(true);
+        })
+    },[])   
     
     function sendUserHabitToAPI(e){
         e.preventDefault();
@@ -74,21 +84,12 @@ export default function Habits(){
     }
 
     function userHabitsList(){
+        if(arrUserHabits === null){
+            return <></>
+         } else{
+             return (arrUserHabits.map((habit,index)=> <UserHabits habit={habit} key={habit.id} index={index} deleteHabitFromList={deleteHabitFromList}/> ))
+         }
 
-        getUserHabits(userToken).then(({data})=>{
-            setArrUserHabits(data);
-
-        });
-
-        if(arrUserHabits.length === 0){
-            return(
-                <Warning>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Warning>
-            )
-        } else{
-            return(
-                (arrUserHabits.map((habit,index)=> <UserHabits habit={habit} key={habit.id} index={index} deleteHabitFromList={deleteHabitFromList}/> ))
-            )
-        }
     }
 
     function deleteHabitFromList(position){
@@ -114,9 +115,11 @@ export default function Habits(){
                         </Actions>
                     </HabitBox> : ""}
             </CreatingHabit>
+            {loadingHabits ? 
             <CreatedHabits>
-                {userHabits}           
-            </CreatedHabits>
+                {userHabits}
+                {arrUserHabits.length === 0 ? <Warning>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Warning> : ''}           
+            </CreatedHabits> : <CreatedHabits><ThreeDots color="#FFFFFF" height={20} width={50}/></CreatedHabits> }
         </HabitsContainer>
     )
 }
@@ -141,7 +144,6 @@ border: 2px solid blue;
 height: 100vh;
 padding: 10px;
 background-color: #E5E5E5;
-
 `
 const PageHeader= styled.div`
 display: flex;
