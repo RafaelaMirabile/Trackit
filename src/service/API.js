@@ -52,4 +52,14 @@ function getUserHabitsForTodayPage(userToken){
     return promise;
 }
 
-export  {getUserHabitsForTodayPage,postSignUp,postLogin, sendUserHabit,getUserHabits,deleteUserHabit}
+function habitStatus(userToken, habitID,status){
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userToken}`
+        }
+    }
+    const promise = axios.post(`${URL_BASE}/habits/${habitID}/${status}`,{},config);
+    return promise;
+}
+
+export  {habitStatus,getUserHabitsForTodayPage,postSignUp,postLogin, sendUserHabit,getUserHabits,deleteUserHabit}

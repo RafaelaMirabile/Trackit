@@ -13,7 +13,7 @@ export default function Habits(){
     
     const [createHabitBox, setCreateHabitBox]= useState(false);
     const[habitName, setHabitName]= useState("");
-    const [selectedDay, setSelectedDays] = useState([]);
+    const [selectedDay, setSelectedDay] = useState([]);
     const [arrUserHabits, setArrUserHabits]= useState([]);
     const [loading, setLoading]= useState(true);
 
@@ -30,7 +30,6 @@ export default function Habits(){
     function sendUserHabitToAPI(e){
         e.preventDefault();
         setLoading(false);
-        console.log(habitName);
 
        const body ={
             name: habitName,
@@ -41,7 +40,8 @@ export default function Habits(){
             addUserHabit(data);
             setLoading(true);
             setHabitName("");
-            setSelectedDays("");
+            setSelectedDay("");
+            console.log(selectedDay);
 
         })
         .catch(()=>{
@@ -51,6 +51,9 @@ export default function Habits(){
                 title: 'Ops...',
                 text: 'Preencha todos os campos corretamente',
             })
+            setHabitName("");
+            setSelectedDay("");
+            console.log(selectedDay);
         })
     }
 
@@ -64,7 +67,7 @@ export default function Habits(){
                 <Input required type="text" placeholder="nome do hábito" value={habitName} onChange={(e) => setHabitName(e.target.value)}></Input>
                 <Days>
                     {weekdays.map((weekday, index) => <Day selectedDay={selectedDay} 
-                    setSelectedDays={setSelectedDays} weekday={weekday} key={index} habitName={habitName}/>)}         
+                    setSelectedDay={setSelectedDay} weekday={weekday} key={index} />)}         
                 </Days>
             </Box>
         )
@@ -74,7 +77,7 @@ export default function Habits(){
 
         getUserHabits(userToken).then(({data})=>{
             setArrUserHabits(data);
-            setLoading(true);
+
         });
 
         if(arrUserHabits.length === 0){
@@ -112,7 +115,7 @@ export default function Habits(){
                     </HabitBox> : ""}
             </CreatingHabit>
             <CreatedHabits>
-                {userHabits}
+                {userHabits}           
             </CreatedHabits>
         </HabitsContainer>
     )
@@ -130,12 +133,14 @@ border:2px solid pink;
 display: flex;
 justify-content: center;
 align-items: center;
+flex-direction: column;
 `
 const HabitsContainer = styled.div`
 margin-top: 73px;
 border: 2px solid blue;
-height: 100hv;
+height: 100vh;
 padding: 10px;
+background-color: #E5E5E5;
 
 `
 const PageHeader= styled.div`

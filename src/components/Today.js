@@ -2,11 +2,12 @@
 import dayjs from "dayjs";
 import { useContext,useEffect,useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 import UserContext from "../contexts/UserContext";
 import { CheckmarkSharp } from "react-ionicons";
-import { getUserHabitsForTodayPage } from "../service/API";
+import { getUserHabitsForTodayPage, habitStatus } from "../service/API";
+import "dayjs/locale/pt-br"
+
 
 export default function Today(){
 
@@ -14,12 +15,10 @@ export default function Today(){
     const currentDate = dayjs().locale('pt-br').format("dddd, D/MM");
     const[loading, setLoading]= useState(false);
 
-    useEffect(()=>{
-        
-        getUserHabitsForTodayPage(userToken).then(({data})=> {
+    useEffect(()=>{        
+        getUserHabitsForTodayPage(userToken).then(({data})=> {           
             setArrTodayUserHabits(data);
             setLoading(true);
-
         })
         .catch(()=> console.error)
         
@@ -30,8 +29,7 @@ export default function Today(){
         
         function calcPercentage () {
             const progress = arrTodayUserHabits.filter(habit => habit.done).length;
-            const totalHabits = arrTodayUserHabits.length;
-        
+            const totalHabits = arrTodayUserHabits.length;        
             return ((progress/totalHabits) * 100).toFixed(0);
         }
         return(
@@ -49,21 +47,21 @@ export default function Today(){
     
     return(
         <>  
-        {loading ?     <HojeContainer> 
-                            {topbar}
-                            <TodayUserHabitsContainer>
-                                {arrTodayUserHabits.map((value,index)=> 
-                                    <HabitStatus 
-                                        index={index} 
-                                        habitName={value.name}
-                                        habitID={value.id}  
-                                        currentSequence={value.currentSequence} 
-                                        highestSequence={value.highestSequence} 
-                                        status={value.done}
-                                        loading={loading}
-                                    />)}
-                            </TodayUserHabitsContainer>
-                        </HojeContainer>    : <Loading><ThreeDots color="#52B6FF" height={20} width={50}/></Loading>
+        {loading ?  <HojeContainer> 
+                        {topbar}
+                        <TodayUserHabitsContainer>
+                            {arrTodayUserHabits.map((value,index)=> 
+                                <HabitStatus 
+                                    index={index} 
+                                    habitName={value.name}
+                                    habitID={value.id}  
+                                    currentSequence={value.currentSequence} 
+                                    highestSequence={value.highestSequence} 
+                                    status={value.done}
+                                    loading={loading}
+                                />)}
+                        </TodayUserHabitsContainer>
+                    </HojeContainer>  : <Loading><ThreeDots color="#52B6FF" height={20} width={50}/></Loading>
         }        
         </>
     )
@@ -88,27 +86,19 @@ function HabitStatus({habitName,currentSequence,highestSequence,status,habitID,l
         setCurrent(current - 1);
         setRecord(record - 1);
     }
-   
-        
-    function toggleStatus(habitID){
-        
+           
+    function toggleStatus(habitID){        
         if(!done){
-            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitID}/check`, {}, {
-                headers: {Authorization: `Bearer ${userToken}`}
-            });
+            habitStatus(userToken, habitID,'check');
             setDone(true);
             check();
-        
+
         } else{
-            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitID}/uncheck`, {}, {
-            headers: {Authorization: `Bearer ${userToken}`}
-        });
-        setDone(false);
-        uncheck();
-        }
-       
-    }
-    
+            habitStatus(userToken,habitID,'uncheck');
+            setDone(false);
+            uncheck();
+        }       
+    }    
     return(
         <> {loading ?  
         <TodayHabitBox>
@@ -141,6 +131,7 @@ justify-content: space-between;
 width: 340px;
 height: 94px;
 background: #FFFFFF;
+background-color: green;
 border-radius: 5px;
 padding: 10px;
 `
@@ -193,7 +184,8 @@ display: flex;
 flex-direction: column;
 justify-content: flex-start;
 padding: 10px;
-height: 500px;
+height: 100vh;
+border: 2px solid blue;
 `
 const Sequence =styled.p`
 font-size: 13px;

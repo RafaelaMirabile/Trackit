@@ -10,7 +10,7 @@ export default function Header(){
     return(
         <HeaderContainer>
             <Content>
-                <AppName to="/habitos">TrackIt</AppName>
+                <AppName to="/hoje">TrackIt</AppName>
                 <ProfilePicture>
                     <img src={userProfilePicture} alt="Foto de perfil do usuário" />
                 </ProfilePicture>

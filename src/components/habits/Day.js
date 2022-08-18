@@ -3,25 +3,26 @@ import { useState } from "react";
 
 
 export default function Day(props){
-const {weekday, selectedDay, setSelectedDays}= props;
 
-const [selected,setSelected]= useState(false);
+    const {weekday, selectedDay, setSelectedDay} = props;
+    
+    const [selected,setSelected]= useState(false);
     
     function save(weekday){
                
         if(selected === false){
             setSelected(!selected)
-            setSelectedDays([...selectedDay, weekday.dayID]);
+            setSelectedDay([...selectedDay, weekday.dayID]);
         }else{
             setSelected(!selected);
-            const novoarray = selectedDay.filter(value => value !== weekday.dayID);
-            setSelectedDays(novoarray);
+            const newarray = Object.values(selectedDay).filter(value => value !== weekday.dayID);
+            setSelectedDay(newarray);
             console.log(selectedDay);
         }      
     }       
     return(
         <>
-         <Weekday  selected={selected} key={weekday.dayID} onClick={()=>save(weekday)}>{weekday.day}</Weekday>
+         <Weekday  selected={selected} key={weekday.dayID} onClick={()=> save(weekday)}>{weekday.day}</Weekday>
         </>
     )
 }
