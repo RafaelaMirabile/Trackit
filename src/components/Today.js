@@ -35,10 +35,13 @@ export default function Today(){
         return(
             <TodayDate>
                 <h2>{currentDate.charAt(0).toUpperCase() + currentDate.slice(1)}</h2>
+                {loading ?  
                 <State>
-                {arrTodayUserHabits.filter(habit => habit.done).length === 0 ?<span>Nenhum hábito concluído ainda</span>  :
-                <p>{calcPercentage()}% dos hábitos concluídos</p>}
-                </State>              
+                    {arrTodayUserHabits.filter(habit => habit.done).length === 0 ?<span>Nenhum hábito concluído ainda</span>  :
+                    <p>{calcPercentage()}% dos hábitos concluídos</p>}
+                </State>  : 
+                <State><ThreeDots color="#FFFFFF" height={20} width={50}/></State>  
+                }           
             </TodayDate>
         )
     }
@@ -47,9 +50,10 @@ export default function Today(){
     
     return(
         <>  
-        {loading ?  <HojeContainer> 
+<TodayContainer> 
                         {topbar}
-                        <TodayUserHabitsContainer>
+
+                        {loading ?                         <TodayUserHabitsContainer>
                             {arrTodayUserHabits.map((value,index)=> 
                                 <HabitStatus 
                                     index={index} 
@@ -60,9 +64,15 @@ export default function Today(){
                                     status={value.done}
                                     loading={loading}
                                 />)}
-                        </TodayUserHabitsContainer>
-                    </HojeContainer>  : <Loading><ThreeDots color="#52B6FF" height={20} width={50}/></Loading>
-        }        
+                        </TodayUserHabitsContainer> : <TodayUserHabitsLoadingContainer>
+                        <ThreeDots color="#FFFFFF" height={30} width={60}/>
+                            </TodayUserHabitsLoadingContainer>
+                        
+                        }
+
+
+</TodayContainer>  
+       
         </>
     )
 }
@@ -100,7 +110,7 @@ function HabitStatus({habitName,currentSequence,highestSequence,status,habitID,l
         }       
     }    
     return(
-        <> {loading ?  
+        <>  
         <TodayHabitBox>
             <SequenceBox>
                 <HabitName>{habitName}</HabitName>
@@ -114,39 +124,41 @@ function HabitStatus({habitName,currentSequence,highestSequence,status,habitID,l
                     width="28px"
                 />
             </CheckHabit>           
-        </TodayHabitBox> : <Loading><ThreeDots color="#52B6FF" height={20} width={50}/></Loading> }
+        </TodayHabitBox> 
         </>          
         )
     }
 
-const Loading=styled.div`
-position: fixed;
-top: 300px;
-left: 158px;
-`
 const TodayHabitBox =styled.div`
-margin-bottom: 14px;
+margin-bottom: 10px;
 display: flex;
 justify-content: space-between;
 width: 340px;
 height: 94px;
 background: #FFFFFF;
-background-color: green;
 border-radius: 5px;
 padding: 10px;
 `
-
-const TodayUserHabitsContainer=styled.div`
+const TodayUserHabitsLoadingContainer = styled.div`
 height: 400px;
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
 overflow-y: auto;
-padding-top:40px;
+border: 2px solid red;
+`
+
+const TodayUserHabitsContainer=styled.div`
+display: flex;
+justify-content: flex-start;
+align-items: center;
+flex-direction: column;
+overflow-y: auto;
+border: 2px solid red;
 `
 const TodayDate=styled.div`
-margin-bottom: 16px;
+margin-bottom: 8px;
 h2{
     font-family: 'Lexend Deca';
     font-style: normal;
@@ -177,7 +189,7 @@ p{
 }
 
 `
-const HojeContainer=styled.div`
+const TodayContainer=styled.div`
 margin-top: 70px;
 background-color: #E5E5E5;
 display: flex;

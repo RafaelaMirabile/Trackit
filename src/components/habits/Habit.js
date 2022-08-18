@@ -17,8 +17,7 @@ export default function Habits(){
     const [arrUserHabits, setArrUserHabits]= useState([]);
     const [loading, setLoading]= useState(true);
     const [loadingHabits, setLoadingHabits]= useState(true);
-
-       
+      
     const weekdays =[
     {day: 'D',dayID: 0,isSelected : false},
     {day: 'S',dayID: 1,isSelected : false},
@@ -29,7 +28,9 @@ export default function Habits(){
     {day: 'S',dayID: 6,isSelected : false}]
     
     useEffect(()=>{
+        
         setLoadingHabits(false);
+        
         getUserHabits(userToken).then(({data})=>{
             setArrUserHabits(data);
             setLoading(true);
@@ -89,7 +90,6 @@ export default function Habits(){
          } else{
              return (arrUserHabits.map((habit,index)=> <UserHabits habit={habit} key={habit.id} index={index} deleteHabitFromList={deleteHabitFromList}/> ))
          }
-
     }
 
     function deleteHabitFromList(position){
@@ -119,7 +119,12 @@ export default function Habits(){
             <CreatedHabits>
                 {userHabits}
                 {arrUserHabits.length === 0 ? <Warning>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Warning> : ''}           
-            </CreatedHabits> : <CreatedHabits><ThreeDots color="#FFFFFF" height={20} width={50}/></CreatedHabits> }
+            </CreatedHabits> 
+            : 
+            <CreatedHabits>
+                <ThreeDots color="#FFFFFF" height={20} width={50}/>
+            </CreatedHabits> 
+            }
         </HabitsContainer>
     )
 }
