@@ -191,7 +191,7 @@ display: flex;
 flex-direction: column;
 justify-content: flex-start;
 padding: 10px;
-height: 100vh;
+min-height: 100vh;
 `
 const Sequence =styled.p`
 font-size: 13px;

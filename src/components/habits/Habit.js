@@ -161,8 +161,9 @@ background-color: #E5E5E5;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
-height: 200vh;
+min-height: 100vh;
 padding: 10px;
+
 `
 const PageHeader= styled.div`
 display: flex;
