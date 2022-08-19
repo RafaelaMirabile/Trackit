@@ -104,8 +104,11 @@ export default function Habits(){
                             value={habitName} onChange={(e) => setHabitName(e.target.value)}>
                             </Input>
                             <Days>
-                                {weekdays.map((weekday, index) => <Day selectedDay={selectedDay} 
-                                setSelectedDay={setSelectedDay} weekday={weekday} key={index} />)}         
+                                {weekdays.map((weekday, index) => <Day 
+                                selectedDay={selectedDay} 
+                                setSelectedDay={setSelectedDay} 
+                                weekday={weekday} 
+                                key={index} />)}         
                             </Days>
                         </Box>
                         <Actions>
@@ -141,7 +144,6 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 padding-bottom: 70px;
-overflow-y: auto;
 `
 const CreatedHabitsLoading=styled.div`
 display: flex;
@@ -157,7 +159,7 @@ background-color: #E5E5E5;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
-height: 100vh;
+height: 200vh;
 padding: 10px;
 `
 const PageHeader= styled.div`
@@ -189,6 +191,7 @@ font-weight: 400;
 font-size: 26.976px;
 line-height: 34px;
 color: #FFFFFF;
+padding-bottom: 6px;
 `
 const CreatingHabit = styled.form`
 margin-bottom: 20px;
@@ -245,7 +248,8 @@ display: flex;
 justify-content: center;
 align-items: center;
 border: none;
-margin-top: 8px;
+margin-top: 4px;
+padding-bottom: 5px;
 `
 
 const Cancelar=styled.span`

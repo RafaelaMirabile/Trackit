@@ -57,7 +57,8 @@ export default function Today(){
                 {loading ? <TodayUserHabitsContainer>
                                 {arrTodayUserHabits.map((value,index)=> 
                                 <HabitStatus 
-                                    index={index} 
+                                    index={index}
+                                    key={index} 
                                     habitName={value.name}
                                     habitID={value.id}  
                                     currentSequence={value.currentSequence} 
@@ -150,6 +151,7 @@ align-items: center;
 flex-direction: column;
 overflow-y: auto;
 padding-bottom: 120px;
+margin-top: 30px;
 `
 const TodayDate=styled.div`
 margin-bottom: 8px;
