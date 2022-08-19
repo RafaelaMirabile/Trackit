@@ -42,15 +42,6 @@ function deleteUserHabit(userToken,id){
     return promise;
 }
 
-function getUserHabitsForTodayPage(userToken){
-    const config = {
-        headers: {
-            Authorization: `Bearer ${userToken}`
-        }
-    }
-    const promise = axios.get(`${URL_BASE}/habits/today`,config);
-    return promise;
-}
 
 function habitStatus(userToken, habitID,status){
     const config = {
@@ -62,4 +53,4 @@ function habitStatus(userToken, habitID,status){
     return promise;
 }
 
-export  {habitStatus,getUserHabitsForTodayPage,postSignUp,postLogin, sendUserHabit,getUserHabits,deleteUserHabit}
+export  {habitStatus,postSignUp,postLogin, sendUserHabit,getUserHabits,deleteUserHabit}

@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import UserContext from "../contexts/UserContext";
 import { CheckmarkSharp } from "react-ionicons";
-import { getUserHabitsForTodayPage, habitStatus } from "../service/API";
+import {habitStatus } from "../service/API";
 import "dayjs/locale/pt-br"
-
+import axios from "axios";
 
 export default function Today(){
 
@@ -15,13 +15,16 @@ export default function Today(){
     const currentDate = dayjs().locale('pt-br').format("dddd, D/MM");
     const[loading, setLoading]= useState(false);
 
-    useEffect(()=>{        
-        getUserHabitsForTodayPage(userToken).then(({data})=> {           
-            setArrTodayUserHabits(data);
+    useEffect(()=>{   
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",{
+        headers: {Authorization : `Bearer ${userToken}`}    
+        });
+        promise.then((response)=>{
+            setArrTodayUserHabits(response.data);
             setLoading(true);
-        })
-        .catch(()=> console.error);
-        
+
+    });
+        promise.catch(()=> console.error);           
     },[userToken, arrTodayUserHabits, setArrTodayUserHabits]);
 
     
@@ -138,7 +141,6 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 overflow-y: auto;
-border: 2px solid red;
 `
 
 const TodayUserHabitsContainer=styled.div`
@@ -147,7 +149,6 @@ justify-content: flex-start;
 align-items: center;
 flex-direction: column;
 overflow-y: auto;
-border: 2px solid red;
 padding-bottom: 120px;
 `
 const TodayDate=styled.div`
@@ -180,7 +181,6 @@ p{
     color: #8FC549;
     margin-top:2px;
 }
-
 `
 const TodayContainer=styled.div`
 margin-top: 70px;
@@ -190,7 +190,6 @@ flex-direction: column;
 justify-content: flex-start;
 padding: 10px;
 height: 100vh;
-border: 2px solid blue;
 `
 const Sequence =styled.p`
 font-size: 13px;

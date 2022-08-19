@@ -74,7 +74,6 @@ text-decoration: underline;
 color: #52B6FF;
 `
 const SignUpConatainer = styled.div`
-background-color: green;
 margin: 0 auto;
 width: 100%;
 display: flex;

@@ -71,18 +71,7 @@ export default function Habits(){
     function addUserHabit(data){
         setArrUserHabits([...arrUserHabits,data]);
     }
-    
-    function createHabitInput(){
-        return(
-            <Box>
-                <Input required type="text" placeholder="nome do hábito" value={habitName} onChange={(e) => setHabitName(e.target.value)}></Input>
-                <Days>
-                    {weekdays.map((weekday, index) => <Day selectedDay={selectedDay} 
-                    setSelectedDay={setSelectedDay} weekday={weekday} key={index} />)}         
-                </Days>
-            </Box>
-        )
-    }
+
 
     function userHabitsList(){
         if(arrUserHabits === null){
@@ -96,7 +85,7 @@ export default function Habits(){
         setArrUserHabits([...arrUserHabits].filter((habit,index)=> position !== index));
     }
 
-    const inputFild = createHabitInput();
+
     const userHabits = userHabitsList();
    
     return(
@@ -108,7 +97,17 @@ export default function Habits(){
             <CreatingHabit>
                 {createHabitBox ? 
                     <HabitBox >
-                        {inputFild}
+                        <Box>
+                            <Input required 
+                            type="text" 
+                            placeholder="nome do hábito" 
+                            value={habitName} onChange={(e) => setHabitName(e.target.value)}>
+                            </Input>
+                            <Days>
+                                {weekdays.map((weekday, index) => <Day selectedDay={selectedDay} 
+                                setSelectedDay={setSelectedDay} weekday={weekday} key={index} />)}         
+                            </Days>
+                        </Box>
                         <Actions>
                             <Cancelar onClick={()=>setCreateHabitBox(false)}>Cancelar</Cancelar>
                             {loading ? <Salvar onClick={sendUserHabitToAPI}>Salvar</Salvar> : <Salvar><ThreeDots color="#FFFFFF" height={20} width={50}/></Salvar> }
@@ -121,9 +120,9 @@ export default function Habits(){
                 {arrUserHabits.length === 0 ? <Warning>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Warning> : ''}           
             </CreatedHabits> 
             : 
-            <CreatedHabits>
+            <CreatedHabitsLoading>
                 <ThreeDots color="#FFFFFF" height={20} width={50}/>
-            </CreatedHabits> 
+            </CreatedHabitsLoading> 
             }
         </HabitsContainer>
     )
@@ -137,23 +136,29 @@ const Warning = styled.p `
 `
 
 const CreatedHabits =styled.div`
-border:2px solid pink;
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
 padding-bottom: 70px;
 overflow-y: auto;
+`
+const CreatedHabitsLoading=styled.div`
+display: flex;
+height: 400px;
+justify-content: center;
+align-items: center;
+flex-direction: column;
 
 `
 const HabitsContainer = styled.div`
-margin-top: 73px;
+margin-top: 70px;
 background-color: #E5E5E5;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
 height: 100vh;
-border: 2px solid blue;
+padding: 10px;
 `
 const PageHeader= styled.div`
 display: flex;
@@ -189,13 +194,11 @@ const CreatingHabit = styled.form`
 margin-bottom: 20px;
 background-color: #FFFFFF;
 border-radius: 5px;
-border:  2px solid green;
 `
 const HabitBox = styled.div`
 margin-bottom: 20px;
 background-color: #FFFFFF;
 border-radius: 5px;
-border: 2px solid red;
 `
 const Box = styled.div`
 display: flex;
@@ -213,10 +216,11 @@ font-weight: 400;
 font-size: 19.976px;
 line-height: 25px;
 color: #DBDBDB;
-margin-bottom: 10px;
+margin: 10px;
 `
 const Days=styled.div`
 display: flex;
+margin-left: 10px;
 `
 const Actions=styled.div`
 display: flex;

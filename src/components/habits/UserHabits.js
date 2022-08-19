@@ -47,7 +47,7 @@ export default function UserHabits({habit,deleteHabitFromList,index}){
                <p>{habit.name}</p>
                <ion-icon name="trash-outline" onClick={deleteHabit}></ion-icon>
             </HabitName>
-            <div>{weekdays}</div>
+            <WeekdaysContainer>{weekdays}</WeekdaysContainer>
         </CreatedHabit>
     )
 }
@@ -64,12 +64,6 @@ width: 340px;
 height: 91px;
 background: #FFFFFF;
 border-radius: 5px;
-background-color: red;
-
-div:nth-child(2){
-display: flex;
-}
-
 p{
     font-family: 'Lexend Deca';
     font-style: normal;
@@ -84,6 +78,11 @@ width: 20px;
 height: 20px;
 }
 `
+const WeekdaysContainer= styled.div`
+display: flex;
+margin-left: 10px;
+`
+
 const Weekday = styled.div`
     display: flex;
     flex-direction: column;

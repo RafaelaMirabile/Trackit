@@ -38,7 +38,7 @@ export default function Footer(){
 
 const Progressbar = styled.div`
     margin-bottom: 50px;
-    height: 90px;
+    height: 70px;
     width: 90px;
     display: flex;
     justify-content: center;

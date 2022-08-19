@@ -60,7 +60,6 @@ export default function Login(){
     )
 }
 const LoginContainer = styled.div`
-background-color: green;
 margin: 0 auto;
 width: 100%;
 display: flex;
