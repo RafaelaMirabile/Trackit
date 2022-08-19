@@ -14,11 +14,11 @@ export default function Login(){
     
     const[email, setUserEmail]= useState("");
     const[password, setUserPassword]= useState("");
-    const[isInputDisable, setIsInputDisable] = useState(false);
+    const[inputStatus, setInputStatus] = useState(false);
 
     function loginRequest(e){
         e.preventDefault();
-        setIsInputDisable(true);
+        setInputStatus(true);
         const body ={
             email,
             password
@@ -39,7 +39,7 @@ export default function Login(){
                 title: 'Ops...',
                 text: 'Usuário e/ou senha incorretos!',
             })
-            setIsInputDisable(false);
+            setInputStatus(false);
             setUserEmail('');
             setUserPassword('');
         })
@@ -48,11 +48,11 @@ export default function Login(){
     return(
         <LoginContainer>
               <Forms onSubmit={loginRequest}>
-                <input disabe= {isInputDisable ? "true" : "false"} 
+                <input disabled = {inputStatus}  
                 type = "text" required placeholder="email" value={email} onChange={e => setUserEmail(e.target.value)}></input>
-                <input disabe= {isInputDisable ? "true" : "false"}
+                <input disabled = {inputStatus} 
                 type="password" required placeholder="senha" value={password} onChange={e => setUserPassword(e.target.value)}></input>
-                {isInputDisable ? <button type="submit"><ThreeDots color="#FFFFFF" height={20} width={50}/></button> :
+                {inputStatus ? <button type="submit"><ThreeDots color="#FFFFFF" height={20} width={50}/></button> :
                 <button type="submit">Entrar</button> }                           
               </Forms>
               <LinkToSignUp to="/cadastro"> Não tem uma conta? Cadastre-se!</LinkToSignUp>

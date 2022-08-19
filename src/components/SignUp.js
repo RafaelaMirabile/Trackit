@@ -10,16 +10,15 @@ export default function SignUp(){
     
     const navigate = useNavigate();
 
-    const [isInputDisable, setIsInputDisable] = useState(false);
+    const [inputStatus,setInputStatus] = useState(false);
     const[email, setUserEmail]= useState("");
     const[password, setUserPassword]= useState("");
     const[name, setUserName]= useState("");
     const[image, setUserProfilePic]= useState("");
 
-    function userRegistration(e){
+    function userRegistration(e){       
         e.preventDefault();
-        setIsInputDisable(true);
-        
+        setInputStatus(true);
         const body = {
             email,
             name,
@@ -28,7 +27,7 @@ export default function SignUp(){
         }
 
         postSignUp(body)
-        .then(()=>{
+        .then(()=>{            
             Swal.fire({
                 icon: 'success',
                 title: 'Sucesso!',
@@ -42,7 +41,7 @@ export default function SignUp(){
                 title: 'Cadastro Inválido',
                 text: 'Houve algum erro durante o cadastro :( Confira se os dados estão preenchidos corretamente.',
           })
-            setIsInputDisable(false);
+            setInputStatus(false);
             setUserEmail('');
             setUserName('');
             setUserPassword('');
@@ -53,15 +52,15 @@ export default function SignUp(){
     return (
         <SignUpConatainer>
             <Forms onSubmit={userRegistration}>
-                <input  disabled = {isInputDisable ? "true" : "false"} 
+                <input  disabled = {inputStatus} 
                 placeholder="email" type="text" required value={email} onChange={e => setUserEmail(e.target.value)}></input>
-                <input disabled = {isInputDisable ? "true" : "false"} 
+                <input disabled = {inputStatus} 
                 placeholder="senha" type="text" required value={password} onChange={e => setUserPassword(e.target.value)}></input>
-                <input disabled = {isInputDisable ? "true" : "false"} 
+                <input disabled = {inputStatus} 
                 placeholder="nome" type="text" required value={name} onChange={e => setUserName(e.target.value)}></input>
-                <input disabled = {isInputDisable ? "true" : "false"} 
+                <input disabled = {inputStatus} 
                 placeholder="foto" type="text" required value={image} onChange={e => setUserProfilePic(e.target.value)}></input>
-                {isInputDisable ?<button><ThreeDots color="#FFFFFF" height={20} width={50}/></button> : <button type="submit">Enviar</button> }               
+                {inputStatus ? <button> <ThreeDots color="#FFFFFF" height={20} width={50}/> </button> : <button type="submit">Enviar</button> }               
             </Forms>
             <LinkToLoginPage to ="/">Já tem uma conta? Faça login!</LinkToLoginPage>
         </SignUpConatainer>        
