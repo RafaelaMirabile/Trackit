@@ -199,6 +199,7 @@ const HabitBox = styled.div`
 margin-bottom: 20px;
 background-color: #FFFFFF;
 border-radius: 5px;
+height: 150px;
 `
 const Box = styled.div`
 display: flex;
@@ -226,6 +227,7 @@ const Actions=styled.div`
 display: flex;
 align-items: center;
 justify-content: flex-end;
+padding: 10px;
 `
 
 const Salvar=styled.button`
