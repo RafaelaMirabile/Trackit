@@ -5,7 +5,6 @@ import { useState } from "react";
 export default function Day(props){
 
     const {weekday, selectedDay, setSelectedDay} = props;
-    
     const [selected,setSelected]= useState(false);
     
     function save(weekday){

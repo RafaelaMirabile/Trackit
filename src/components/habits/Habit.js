@@ -17,6 +17,7 @@ export default function Habits(){
     const [arrUserHabits, setArrUserHabits]= useState([]);
     const [loading, setLoading]= useState(true);
     const [loadingHabits, setLoadingHabits]= useState(true);
+
       
     const weekdays =[
     {day: 'D',dayID: 0,isSelected : false},
@@ -53,6 +54,7 @@ export default function Habits(){
             setHabitName("");
             setSelectedDay("");
             console.log(selectedDay);
+            setCreateHabitBox(false);
 
         })
         .catch(()=>{
@@ -71,7 +73,6 @@ export default function Habits(){
     function addUserHabit(data){
         setArrUserHabits([...arrUserHabits,data]);
     }
-
 
     function userHabitsList(){
         if(arrUserHabits === null){
@@ -92,7 +93,7 @@ export default function Habits(){
         <HabitsContainer>
             <PageHeader>
                 <h2>Meus hábitos</h2>
-                <AddHabit onClick={()=> setCreateHabitBox(!createHabitBox) }>{createHabitBox ? "-" : "+"}</AddHabit>
+                <AddHabit onClick={()=> setCreateHabitBox(!createHabitBox)}>{createHabitBox ? "-" : "+"}</AddHabit>
             </PageHeader>
             <CreatingHabit>
                 {createHabitBox ? 
@@ -108,7 +109,8 @@ export default function Habits(){
                                 selectedDay={selectedDay} 
                                 setSelectedDay={setSelectedDay} 
                                 weekday={weekday} 
-                                key={index} />)}         
+                                key={index}
+                                />)}         
                             </Days>
                         </Box>
                         <Actions>
