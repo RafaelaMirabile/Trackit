@@ -26,6 +26,12 @@ Aimed at helping you build good habits and reach your goals.
 
 ---
 
+## How it works
+
+Develop the front end using an preexistent active API.
+
+---
+
 
 ## Layout
 
