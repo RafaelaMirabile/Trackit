@@ -30,7 +30,7 @@ Aimed at helping you build good habits and reach your goals.
 ## Layout
 
 <div align="center">
- <img src="./public/mywallet.gif" alt="App demonstration"/>
+ <img src="./public/trackit.gif" alt="App demonstration"/>
 </div>
 
 
