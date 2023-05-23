@@ -53,7 +53,6 @@ export default function Habits(){
             setLoading(true);
             setHabitName("");
             setSelectedDay("");
-            console.log(selectedDay);
             setCreateHabitBox(false);
 
         })
@@ -66,7 +65,7 @@ export default function Habits(){
             })
             setHabitName("");
             setSelectedDay("");
-            console.log(selectedDay);
+            setCreateHabitBox(false);
         })
     }
 

@@ -76,6 +76,8 @@ p{
 ion-icon{
 width: 20px;
 height: 20px;
+position: absolute;
+z-index: 1;
 }
 `
 const WeekdaysContainer= styled.div`
