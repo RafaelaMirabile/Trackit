@@ -4,13 +4,13 @@ import Swal from "sweetalert2";
 import UserContext from "../../contexts/UserContext"
 import { deleteUserHabit } from "../../service/API";
 
-export default function UserHabits({habit,deleteHabitFromList,index}){
-    
-    const {userToken} = useContext(UserContext);
-    
+export default function UserHabits({ habit, deleteHabitFromList, index }) {
+
+    const { userToken } = useContext(UserContext);
+
     const weekdaysList = ["D", "S", "T", "Q", "Q", "S", "S"];
-    
-    function deleteHabit(){
+
+    function deleteHabit() {
         Swal.fire({
             title: 'Deseja excluir o hábito?',
             text: 'Não será possível reverter esta ação',
@@ -20,50 +20,55 @@ export default function UserHabits({habit,deleteHabitFromList,index}){
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sim',
             cancelButtonText: 'Não',
-          }).then ((result)=>{
-            if(result.isConfirmed){
-                deleteUserHabit(userToken,habit.id);
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteUserHabit(userToken, habit.id);
                 deleteHabitFromList(index);
             }
-          })
+        })
     }
-    
-    function showWeekDays(){
-        return(
+
+    function showWeekDays() {
+        return (
             <>
-            {weekdaysList.map((weekday, index) => {
-            const isSelected = habit.days.some((day) => day === index);
-            return (<Weekday key={index} isSelected={isSelected}>{weekday}</Weekday>)
-        })}
+                {weekdaysList.map((weekday, index) => {
+                    const isSelected = habit.days.some((day) => day === index);
+                    return (<Weekday key={index} isSelected={isSelected}>{weekday}</Weekday>)
+                })}
             </>
         )
     }
-    
-    const weekdays= showWeekDays();
-    
-    return(
+
+    const weekdays = showWeekDays();
+
+    return (
         <CreatedHabit>
-            <HabitName>
-               <p>{habit.name}</p>
-               <ion-icon name="trash-outline" onClick={deleteHabit}></ion-icon>
-            </HabitName>
-            <WeekdaysContainer>{weekdays}</WeekdaysContainer>
+            <Habit>
+                <p>{habit.name}</p>
+                <WeekdaysContainer>{weekdays}</WeekdaysContainer>
+            </Habit>
+            <div>
+                <ion-icon name="trash-outline" onClick={deleteHabit}></ion-icon>
+            </div>
         </CreatedHabit>
     )
 }
 
-const HabitName = styled.div`
+const Habit = styled.div`
 display: flex;
+flex-direction: column;
 justify-content: space-between;
-width:340px;
-padding: 10px;
+width: 300px;
 `
-const CreatedHabit= styled.div`
+const CreatedHabit = styled.div`
 margin-bottom: 10px;
 width: 340px;
 height: 91px;
 background: #FFFFFF;
 border-radius: 5px;
+display: flex;
+align-items: center;
+padding: 10px;
 p{
     font-family: 'Lexend Deca';
     font-style: normal;
@@ -74,15 +79,16 @@ p{
 }
 
 ion-icon{
-width: 20px;
-height: 20px;
+width: 24px;
+height: 24px;
 position: absolute;
 z-index: 1;
+margin-top: -10px;
 }
 `
-const WeekdaysContainer= styled.div`
+const WeekdaysContainer = styled.div`
 display: flex;
-margin-left: 10px;
+margin-top: 4px;
 `
 
 const Weekday = styled.div`

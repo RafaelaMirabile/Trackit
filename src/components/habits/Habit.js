@@ -7,48 +7,48 @@ import { ThreeDots } from "react-loader-spinner";
 import Swal from "sweetalert2";
 import UserHabits from "./UserHabits";
 
-export default function Habits(){
+export default function Habits() {
 
-    const {userToken}= useContext(UserContext);
-    
-    const [createHabitBox, setCreateHabitBox]= useState(false);
-    const[habitName, setHabitName]= useState("");
+    const { userToken } = useContext(UserContext);
+
+    const [createHabitBox, setCreateHabitBox] = useState(false);
+    const [habitName, setHabitName] = useState("");
     const [selectedDay, setSelectedDay] = useState([]);
-    const [arrUserHabits, setArrUserHabits]= useState([]);
-    const [loading, setLoading]= useState(true);
-    const [loadingHabits, setLoadingHabits]= useState(true);
+    const [arrUserHabits, setArrUserHabits] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [loadingHabits, setLoadingHabits] = useState(true);
 
-      
-    const weekdays =[
-    {day: 'D',dayID: 0,isSelected : false},
-    {day: 'S',dayID: 1,isSelected : false},
-    {day: 'T',dayID: 2,isSelected : false},
-    {day: 'Q',dayID: 3,isSelected : false},
-    {day: 'Q',dayID: 4,isSelected : false},
-    {day: 'S',dayID: 5,isSelected : false},
-    {day: 'S',dayID: 6,isSelected : false}]
-    
-    useEffect(()=>{
-        
+
+    const weekdays = [
+        { day: 'D', dayID: 0, isSelected: false },
+        { day: 'S', dayID: 1, isSelected: false },
+        { day: 'T', dayID: 2, isSelected: false },
+        { day: 'Q', dayID: 3, isSelected: false },
+        { day: 'Q', dayID: 4, isSelected: false },
+        { day: 'S', dayID: 5, isSelected: false },
+        { day: 'S', dayID: 6, isSelected: false }]
+
+    useEffect(() => {
+
         setLoadingHabits(false);
-        
-        getUserHabits(userToken).then(({data})=>{
+
+        getUserHabits(userToken).then(({ data }) => {
             setArrUserHabits(data);
             setLoading(true);
             setLoadingHabits(true);
         })
-    },[])   
-    
-    function sendUserHabitToAPI(e){
+    }, [])
+
+    function sendUserHabitToAPI(e) {
         e.preventDefault();
         setLoading(false);
 
-       const body ={
+        const body = {
             name: habitName,
-            days : selectedDay
+            days: selectedDay
         }
 
-        sendUserHabit(body,userToken).then(({data})=> {
+        sendUserHabit(body, userToken).then(({ data }) => {
             addUserHabit(data);
             setLoading(true);
             setHabitName("");
@@ -56,97 +56,103 @@ export default function Habits(){
             setCreateHabitBox(false);
 
         })
-        .catch(()=>{
-            setLoading(true);
-            Swal.fire({
-                icon: 'error',
-                title: 'Ops...',
-                text: 'Preencha todos os campos corretamente',
+            .catch(() => {
+                setLoading(true);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ops...',
+                    text: 'Preencha todos os campos corretamente',
+                })
+                setHabitName("");
+                setSelectedDay("");
+                setCreateHabitBox(false);
             })
-            setHabitName("");
-            setSelectedDay("");
-            setCreateHabitBox(false);
-        })
     }
 
-    function addUserHabit(data){
-        setArrUserHabits([...arrUserHabits,data]);
+    function addUserHabit(data) {
+        setArrUserHabits([...arrUserHabits, data]);
     }
 
-    function userHabitsList(){
-        if(arrUserHabits === null){
+    function userHabitsList() {
+        if (arrUserHabits === null) {
             return <></>
-         } else{
-             return (arrUserHabits.map((habit,index)=> <UserHabits habit={habit} key={habit.id} index={index} deleteHabitFromList={deleteHabitFromList}/> ))
-         }
+        } else {
+            return (arrUserHabits.map((habit, index) =>
+                <UserHabits
+                    habit={habit}
+                    key={habit.id}
+                    index={index}
+                    deleteHabitFromList={deleteHabitFromList}
+                />))
+        }
     }
 
-    function deleteHabitFromList(position){
-        setArrUserHabits([...arrUserHabits].filter((habit,index)=> position !== index));
+    function deleteHabitFromList(position) {
+        setArrUserHabits([...arrUserHabits].filter((habit, index) => position !== index));
     }
 
 
     const userHabits = userHabitsList();
-   
-    return(
+
+    return (
         <HabitsContainer>
             <PageHeader>
                 <h2>Meus hábitos</h2>
-                <AddHabit onClick={()=> setCreateHabitBox(!createHabitBox)}>{createHabitBox ? "-" : "+"}</AddHabit>
+                <AddHabit onClick={() => setCreateHabitBox(!createHabitBox)}>{createHabitBox ? "-" : "+"}</AddHabit>
             </PageHeader>
             <CreatingHabit>
-                {createHabitBox ? 
+                {createHabitBox ?
                     <HabitBox >
                         <Box>
-                            <Input required 
-                            type="text" 
-                            placeholder="nome do hábito" 
-                            value={habitName} onChange={(e) => setHabitName(e.target.value)}>
+                            <Input required
+                                type="text"
+                                placeholder="nome do hábito"
+                                value={habitName} onChange={(e) => setHabitName(e.target.value)}>
                             </Input>
                             <Days>
-                                {weekdays.map((weekday, index) => <Day 
-                                selectedDay={selectedDay} 
-                                setSelectedDay={setSelectedDay} 
-                                weekday={weekday} 
-                                key={index}
-                                />)}         
+                                {weekdays.map((weekday, index) => <Day
+                                    selectedDay={selectedDay}
+                                    setSelectedDay={setSelectedDay}
+                                    weekday={weekday}
+                                    key={index}
+                                />)}
                             </Days>
                         </Box>
                         <Actions>
-                            <Cancelar onClick={()=>setCreateHabitBox(false)}>Cancelar</Cancelar>
-                            {loading ? <Salvar onClick={sendUserHabitToAPI}>Salvar</Salvar> : <Salvar><ThreeDots color="#FFFFFF" height={20} width={50}/></Salvar> }
+                            <Cancelar onClick={() => setCreateHabitBox(false)}>Cancelar</Cancelar>
+                            {loading ? <Salvar onClick={sendUserHabitToAPI}>Salvar</Salvar> : <Salvar><ThreeDots color="#FFFFFF" height={20} width={50} /></Salvar>}
                         </Actions>
                     </HabitBox> : ""}
             </CreatingHabit>
-            {loadingHabits ? 
-            <CreatedHabits>
-                {userHabits}
-                {arrUserHabits.length === 0 ? <Warning>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Warning> : ''}           
-            </CreatedHabits> 
-            : 
-            <CreatedHabitsLoading>
-                <ThreeDots color="#FFFFFF" height={20} width={50}/>
-            </CreatedHabitsLoading> 
+            {loadingHabits ?
+                <CreatedHabits>
+                    {userHabits}
+                    {arrUserHabits.length === 0 ? <Warning>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Warning> : ''}
+                </CreatedHabits>
+                :
+                <CreatedHabitsLoading>
+                    <ThreeDots color="#FFFFFF" height={20} width={50} />
+                </CreatedHabitsLoading>
             }
         </HabitsContainer>
     )
 }
 
-const Warning = styled.p `
+const Warning = styled.p`
     font-family: 'Lexend Deca', sans-serif;
     margin-top: 30px;
     font-size: 18px;
     color: #666666;
 `
 
-const CreatedHabits =styled.div`
+const CreatedHabits = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
 padding-bottom: 70px;
 `
-const CreatedHabitsLoading=styled.div`
+const CreatedHabitsLoading = styled.div`
 display: flex;
 height: 400px;
 justify-content: center;
@@ -164,7 +170,7 @@ min-height: 100vh;
 padding: 10px;
 
 `
-const PageHeader= styled.div`
+const PageHeader = styled.div`
 display: flex;
 justify-content: space-between;
 margin-bottom: 16px;
@@ -210,7 +216,7 @@ const Box = styled.div`
 display: flex;
 flex-direction: column;
 `
-const Input =styled.input`
+const Input = styled.input`
 width: 303px;
 height: 45px;
 background: #FFFFFF;
@@ -224,18 +230,18 @@ line-height: 25px;
 color: #DBDBDB;
 margin: 10px;
 `
-const Days=styled.div`
+const Days = styled.div`
 display: flex;
 margin-left: 10px;
 `
-const Actions=styled.div`
+const Actions = styled.div`
 display: flex;
 align-items: center;
 justify-content: flex-end;
 padding: 10px;
 `
 
-const Salvar=styled.button`
+const Salvar = styled.button`
 width: 84px;
 height: 35px;
 background: #52B6FF;
@@ -254,7 +260,7 @@ margin-top: 4px;
 padding-bottom: 5px;
 `
 
-const Cancelar=styled.span`
+const Cancelar = styled.span`
 font-family: 'Lexend Deca';
 font-style: normal;
 font-weight: 400;
