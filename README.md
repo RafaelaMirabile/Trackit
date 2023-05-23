@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-    Record and track your financial records simply and effectively!
+    Record and track your week habits!
 </h3>
 
 <h4 align="center"> 
@@ -13,7 +13,6 @@
 <p align="center">
  <a href="#about">About</a> •
  <a href="#layout">Layout</a> • 
- <a href="#how-it-works">How it works</a> • 
  <a href="#pre-requisites">Pre-requisites</a> • 
  <a href="#tech-stack">Tech Stack</a> • 
  <a href="#how-to-contribute">How to contribute</a> • 
@@ -23,7 +22,7 @@
 
 ## About
 
-Aimed at bringing the financial notepad into the virtual world, MyWallet is perfect for interact with your records.
+Aimed at helping you build good habits and reach your goals.
 
 ---
 
@@ -41,13 +40,6 @@ This layout was inspired by <a href="https://www.figma.com/file/3r8MSf9dIPuFlvZH
 
 ---
 
-## How it works
-
-This project is divided into two parts:
-1. Backend (You can find here:https://github.com/RafaelaMirabile/mywallet-back)
-2. Frontend (This repository)
-
----
 
 ## Pre-requisites
 
@@ -60,10 +52,10 @@ Before you begin, you will need to have the following tools installed on your ma
 ``` jsx
 
 // Clone this repository
-$ git clone git@github.com:RafaelaMirabile/mywallet-front.git
+$ git clone git@github.com:RafaelaMirabile/Trackit.git
 
 // Access the project folder cmd/terminal
-$ cd my-wallet
+$ cd Trackit
 
 // Install the dependencies
 $ npm install
@@ -87,14 +79,16 @@ The following tools were used in the construction of the project:
 **Frontend**  ([React](https://reactjs.org/))
 
 -   **[Axios](https://github.com/axios/axios)**
+-   **[DotEnv](https://github.com/dotenv-org)**
+-   **[React-circular-progress-bar](https://github.com/kevinsqi/react-circular-progressbar/blob/master/README_v1.md)**
 -   **[React-loader-spinner](https://github.com/mhnpd/react-loader-spinner)**
 -   **[React-router-dom](https://github.com/remix-run/react-router)**
 -   **[Styled-components](https://github.com/styled-components/styled-components)**
 -   **[SweetAlert2](https://github.com/sweetalert2/sweetalert2)**
 -   **[Dayjs](https://github.com/dayjs)**
--   **[React-currency-input-fiel](https://github.com/cchanxzy/react-currency-input-field)**
 
-> See the file  [package.json](https://github.com/RafaelaMirabile/mywallet-front/blob/main/package.json)
+
+> See the file  [package.json](https://github.com/RafaelaMirabile/Trackit/blob/main/package.json)
 
 
 ---
